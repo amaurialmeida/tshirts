@@ -1,17 +1,20 @@
 import streamlit as st
 import pandas as pd
 
-# Configuração da página em modo wide
-st.set_page_config(page_title="Minhas Camisas de Futebol | Coleção Masculina", layout="wide", page_icon="⚽")
+# Configuração da página em modo wide com o novo título
+st.set_page_config(page_title="Camisas de Futebol Amauri ⚽", layout="wide", page_icon="⚽")
 
-# --- CSS CUSTOMIZADO (IDENTIDADE ENJOEI) ---
+# --- NUMERO DO WHATSAPP OBTIDO DA SUA TAG ---
+WHATSAPP_NUMERO = "5511942762908"
+
+# --- CSS CUSTOMIZADO ---
 st.markdown("""
     <style>
     body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* Barra de busca arredondada estilo Enjoei */
+    /* Barra de busca arredondada */
     .stTextInput > div > div > input {
         border-radius: 25px !important;
         border: 1px solid #e2e8f0 !important;
@@ -52,7 +55,7 @@ st.markdown("""
         text-decoration: line-through;
     }
 
-    /* Tags estilo Enjoei */
+    /* Tags estilo vitrine */
     .tag-barateou {
         background-color: #facc15;
         color: #0f172a;
@@ -94,7 +97,7 @@ st.markdown("""
         margin-bottom: 8px;
     }
 
-    /* Botão de WhatsApp customizado */
+    /* Botão de WhatsApp Roxo */
     .btn-comprar {
         display: block;
         width: 100%;
@@ -114,7 +117,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- DADOS DE EXEMPLO (COM PAÍS E TIME/REGIONALIDADE) ---
+# --- BASE DE DADOS ---
 @st.cache_data
 def carregar_dados():
     data = [
@@ -148,7 +151,7 @@ def carregar_dados():
             "titulo": "camisa cuiaba esporte clube 2023",
             "pais": "Brasil",
             "time_regiao": "Mato Grosso",
-            "marca": "umbra",
+            "marca": "umbro",
             "tamanho": "M",
             "preco_original": 0.0,
             "preco_atual": 160.0,
@@ -240,14 +243,14 @@ def carregar_dados():
 
 df = carregar_dados()
 
-# --- BARRA LATERAL (SIDEBAR) PARA FILTROS POR PAÍS E CLUBE ---
+# --- BARRA LATERAL (SIDEBAR) PARA FILTROS ---
 st.sidebar.markdown("## 🔍 **Filtros do Acervo**")
 
 # 1. Filtro de País
 paises_disponiveis = ["Todos"] + sorted(list(df["pais"].unique()))
 pais_selecionado = st.sidebar.selectbox("🌎 **Selecionar País:**", paises_disponiveis)
 
-# 2. Filtro Dinâmico de Time / Cidade (depende do País selecionado)
+# 2. Filtro Dinâmico de Time / Região
 if pais_selecionado != "Todos":
     df_filtrado_pais = df[df["pais"] == pais_selecionado]
     times_disponiveis = ["Todos"] + sorted(list(df_filtrado_pais["time_regiao"].unique()))
@@ -261,11 +264,11 @@ tamanhos_disponiveis = ["Todos"] + sorted(list(df["tamanho"].unique()))
 tamanho_selecionado = st.sidebar.selectbox("📏 **Tamanho:**", tamanhos_disponiveis)
 
 
-# --- TOPBAR DE BUSCA ---
-col_logo, col_search = st.columns([1, 4])
+# --- CABEÇALHO DA PÁGINA ---
+col_logo, col_search = st.columns([2, 3])
 
 with col_logo:
-    st.markdown("### 👕 **enjoei**")
+    st.markdown("### ⚽ **Camisas de Futebol Amauri**")
 
 with col_search:
     busca = st.text_input("", placeholder="🔍 busque por nome da camisa, marca, país ou time...", label_visibility="collapsed")
@@ -275,7 +278,6 @@ st.divider()
 # --- LÓGICA DE FILTRAGEM DOS DADOS ---
 df_exibicao = df.copy()
 
-# Filtro por texto de busca
 if busca:
     df_exibicao = df_exibicao[
         df_exibicao["titulo"].str.contains(busca, case=False) | 
@@ -284,19 +286,16 @@ if busca:
         df_exibicao["time_regiao"].str.contains(busca, case=False)
     ]
 
-# Filtro por País
 if pais_selecionado != "Todos":
     df_exibicao = df_exibicao[df_exibicao["pais"] == pais_selecionado]
 
-# Filtro por Time/Região
 if time_selecionado != "Todos":
     df_exibicao = df_exibicao[df_exibicao["time_regiao"] == time_selecionado]
 
-# Filtro por Tamanho
 if tamanho_selecionado != "Todos":
     df_exibicao = df_exibicao[df_exibicao["tamanho"] == tamanho_selecionado]
 
-# --- EXIBIÇÃO DOS CARDS EM GRADE (4 COLUNAS) ---
+# --- EXIBIÇÃO DOS CARDS ---
 st.markdown(f"##### Exibindo {len(df_exibicao)} camisa(s)")
 st.write("")
 
@@ -313,7 +312,7 @@ else:
             # Imagem do manto
             st.image(row["imagem"], use_container_width=True)
             
-            # Tags estilo Enjoei
+            # Tags
             if row["tag"] == "barateou":
                 st.markdown(f'<span class="tag-barateou">⚡ {row["tag"]}</span>', unsafe_allow_html=True)
             elif "off" in str(row["tag"]):
@@ -334,9 +333,9 @@ else:
             st.markdown(f'<div class="titulo-camisa">{row["titulo"]}</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="subtitulo-camisa">{row["time_regiao"]} ({row["pais"]}) • tam {row["tamanho"]}</div>', unsafe_allow_html=True)
             
-            # Botão de negociação via WhatsApp
-            msg_wa = f"Olá! Vi a '{row['titulo']}' do {row['time_regiao']} por R$ {int(row['preco_atual'])} e quero comprar!"
-            link_wa = f"https://wa.me/SEUNUMERO?text={msg_wa.replace(' ', '%20')}"
+            # Lógica do Botão Roxo enviando direto para o WhatsApp +55 11 94276-2908
+            msg_wa = f"Olá Amauri! Tenho interesse na camisa '{row['titulo']}' ({row['time_regiao']}) tamanho {row['tamanho']} por R$ {int(row['preco_atual'])}."
+            link_wa = f"https://wa.me/{WHATSAPP_NUMERO}?text={msg_wa.replace(' ', '%20')}"
             
             st.markdown(f'<a href="{link_wa}" target="_blank" class="btn-comprar">quero essa</a>', unsafe_allow_html=True)
             st.write("")
