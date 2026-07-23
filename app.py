@@ -1,104 +1,10 @@
-import streamlit as st
-import pandas as pd
-
-# Configuração da página em modo wide
-st.set_page_config(page_title="Camisas de Futebol Amauri ⚽", layout="wide", page_icon="⚽")
-
-# --- NÚMERO DO WHATSAPP ---
-WHATSAPP_NUMERO = "5511942762908"
-
-# --- CSS CUSTOMIZADO (PADRÃO SHOPEE / ENJOEI) ---
-st.markdown("""
-    <style>
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    
-    /* Input de busca */
-    .stTextInput > div > div > input {
-        border-radius: 25px !important;
-        border: 1px solid #e2e8f0 !important;
-        padding: 12px 20px !important;
-        font-size: 0.95rem !important;
-        background-color: #f8fafc !important;
-    }
-
-    /* Preço Roxo e Riscado */
-    .preco-atual {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: #6b21a8;
-        display: inline-block;
-        margin-right: 6px;
-    }
-    .preco-original {
-        font-size: 0.88rem;
-        color: #94a3b8;
-        text-decoration: line-through;
-    }
-
-    /* Tag Amarela Barateou */
-    .tag-barateou {
-        background-color: #facc15;
-        color: #0f172a;
-        font-weight: 700;
-        font-size: 0.72rem;
-        padding: 3px 8px;
-        border-radius: 4px;
-        text-transform: lowercase;
-        display: inline-block;
-        margin-top: 6px;
-        margin-bottom: 6px;
-    }
-
-    /* Título e detalhes da camisa */
-    .titulo-camisa {
-        font-size: 0.92rem;
-        color: #334155;
-        font-weight: 600;
-        margin-top: 4px;
-        margin-bottom: 2px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .subtitulo-camisa {
-        font-size: 0.82rem;
-        color: #64748b;
-        margin-bottom: 12px;
-    }
-
-    /* Botão Roxo WhatsApp 'quero essa' */
-    .btn-comprar {
-        display: block;
-        width: 100%;
-        background-color: #c026d3;
-        color: white !important;
-        text-align: center;
-        padding: 10px 0px;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-decoration: none !important;
-        transition: background-color 0.2s;
-    }
-    .btn-comprar:hover {
-        background-color: #a21caf;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# --- BASE DE DADOS DAS CAMISAS ---
 @st.cache_data
 def carregar_dados():
-    # URL base para puxar os arquivos raw do seu repositório no GitHub
-    RAW_GITHUB = "https://raw.githubusercontent.com/amaurialmeida/tshirts/main/assets"
-    
     data = [
-        # CAMISA DO SÃO PAULO 1997 - DENILSON #11
+        # CAMISA SÃO PAULO 1997 - DENILSON #11 (LINKS RAW DO SEU GITHUB)
         {
             "id": 1,
-            "titulo": "camisa sao paulo adidas 1997 denilson #11",
+            "titulo": "camisa sao paulo adidas 1997 denilson #11 data control",
             "pais": "Brasil",
             "time_regiao": "São Paulo",
             "marca": "adidas",
@@ -107,12 +13,12 @@ def carregar_dados():
             "preco_atual": 450.0,
             "tag": "barateou",
             "fotos": [
-                f"{RAW_GITHUB}/frente/spfc_1997.jpg",     # Altere o 'spfc_1997.jpg' para o nome exato da imagem salva no GitHub
-                f"{RAW_GITHUB}/verso/spfc_1997.jpg",      # Caminho para foto do verso
-                f"{RAW_GITHUB}/detalhes/spfc_1997.jpg"   # Caminho para foto de detalhes
+                "https://raw.githubusercontent.com/amaurialmeida/tshirts/main/assets/frente/frente%201.jpeg",
+                "https://raw.githubusercontent.com/amaurialmeida/tshirts/main/assets/frente/verso/detalhes/verso1.jpeg",
+                "https://raw.githubusercontent.com/amaurialmeida/tshirts/main/assets/frente/verso/detalhe1.jpeg"
             ]
         },
-        # CAMISA CUIABÁ
+        # CAMISA CUIABÁ (EXEMPLO)
         {
             "id": 2,
             "titulo": "camisa cuiaba esporte clube 2023",
@@ -130,110 +36,3 @@ def carregar_dados():
         }
     ]
     return pd.DataFrame(data)
-
-df = carregar_dados()
-
-# --- BARRA LATERAL (FILTROS) ---
-st.sidebar.markdown("## 🔍 **Filtros do Acervo**")
-
-paises_disponiveis = ["Todos"] + sorted(list(df["pais"].unique()))
-pais_selecionado = st.sidebar.selectbox("🌎 **Selecionar País:**", paises_disponiveis)
-
-if pais_selecionado != "Todos":
-    df_filtrado_pais = df[df["pais"] == pais_selecionado]
-    times_disponiveis = ["Todos"] + sorted(list(df_filtrado_pais["time_regiao"].unique()))
-else:
-    times_disponiveis = ["Todos"] + sorted(list(df["time_regiao"].unique()))
-
-time_selecionado = st.sidebar.selectbox("⚽ **Clube / Região:**", times_disponiveis)
-
-tamanhos_disponiveis = ["Todos"] + sorted(list(df["tamanho"].unique()))
-tamanho_selecionado = st.sidebar.selectbox("📏 **Tamanho:**", tamanhos_disponiveis)
-
-# --- CABEÇALHO ---
-col_logo, col_search = st.columns([2, 3])
-
-with col_logo:
-    st.markdown("### ⚽ **Camisas de Futebol Amauri**")
-
-with col_search:
-    busca = st.text_input("", placeholder="🔍 busque por nome da camisa, marca, país ou time...", label_visibility="collapsed")
-
-st.divider()
-
-# --- FILTRAGEM ---
-df_exibicao = df.copy()
-
-if busca:
-    df_exibicao = df_exibicao[
-        df_exibicao["titulo"].str.contains(busca, case=False) | 
-        df_exibicao["marca"].str.contains(busca, case=False) |
-        df_exibicao["pais"].str.contains(busca, case=False) |
-        df_exibicao["time_regiao"].str.contains(busca, case=False)
-    ]
-
-if pais_selecionado != "Todos":
-    df_exibicao = df_exibicao[df_exibicao["pais"] == pais_selecionado]
-
-if time_selecionado != "Todos":
-    df_exibicao = df_exibicao[df_exibicao["time_regiao"] == time_selecionado]
-
-if tamanho_selecionado != "Todos":
-    df_exibicao = df_exibicao[df_exibicao["tamanho"] == tamanho_selecionado]
-
-# --- VITRINE ESTILO SHOPEE / ENJOEI ---
-num_colunas = 4
-cols = st.columns(num_colunas)
-
-if df_exibicao.empty:
-    st.info("Nenhuma camisa encontrada com os filtros selecionados.")
-else:
-    for idx, row in df_exibicao.reset_index(drop=True).iterrows():
-        col = cols[idx % num_colunas]
-        
-        with col:
-            # Controle da foto ativa no carrossel
-            key_foto = f"foto_index_{row['id']}"
-            if key_foto not in st.session_state:
-                st.session_state[key_foto] = 0
-            
-            fotos_list = row["fotos"]
-            idx_foto = st.session_state[key_foto] % len(fotos_list)
-            
-            # 1. Foto em Destaque
-            st.image(fotos_list[idx_foto], use_container_width=True)
-            
-            # 2. Indicador e Botão ▶️ para trocar a foto
-            c_label, c_btn = st.columns([3, 1])
-            with c_label:
-                st.caption(f"📷 {idx_foto + 1}/{len(fotos_list)}")
-            with c_btn:
-                if st.button("▶️", key=f"btn_next_{row['id']}"):
-                    st.session_state[key_foto] = (st.session_state[key_foto] + 1) % len(fotos_list)
-                    st.rerun()
-
-            # 3. Tag "barateou"
-            if row["tag"] == "barateou":
-                st.markdown(f'<span class="tag-barateou">⚡ {row["tag"]}</span>', unsafe_allow_html=True)
-            
-            # 4. Preço
-            if row["preco_original"] > 0:
-                st.markdown(f'''
-                    <div>
-                        <span class="preco-atual">R$ {int(row["preco_atual"])}</span>
-                        <span class="preco-original">R$ {int(row["preco_original"])}</span>
-                    </div>
-                ''', unsafe_allow_html=True)
-            else:
-                st.markdown(f'<div class="preco-atual">R$ {int(row["preco_atual"])}</div>', unsafe_allow_html=True)
-                
-            # 5. Título e Subtítulo
-            st.markdown(f'<div class="titulo-camisa">{row["titulo"]}</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="subtitulo-camisa">{row["time_regiao"]} ({row["pais"]}) • tam {row["tamanho"]}</div>', unsafe_allow_html=True)
-            
-            # 6. Botão Roxo WhatsApp
-            msg_wa = f"Olá Amauri! Tenho interesse na camisa '{row['titulo']}' ({row['time_regiao']}) tamanho {row['tamanho']} por R$ {int(row['preco_atual'])}."
-            link_wa = f"https://wa.me/{WHATSAPP_NUMERO}?text={msg_wa.replace(' ', '%20')}"
-            
-            st.markdown(f'<a href="{link_wa}" target="_blank" class="btn-comprar">quero essa</a>', unsafe_allow_html=True)
-            st.write("")
