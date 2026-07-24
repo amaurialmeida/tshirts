@@ -52,7 +52,6 @@ st.markdown("""
 # --- BASE DE DADOS COMPLETA DO ACERVO ---
 @st.cache_data
 def carregar_dados():
-    # Caminho exato apontando para a pasta assets/frente/verso no formato RAW
     RAW_BASE = "https://raw.githubusercontent.com/amaurialmeida/tshirts/main/assets/frente/verso"
     
     data = [
@@ -450,18 +449,21 @@ for _, camisa in df_filtrado.iterrows():
         link_whatsapp = f"https://wa.me/{WHATSAPP_NUMERO}?text={msg_whatsapp}"
         st.link_button("quero essa", link_whatsapp, use_container_width=True, type="primary")
         
-        # 2. Botões Lado a Lado de Comparação de Preço
+        # 2. Botões Lado a Lado de Comparação de Preço (com checagem segura de valores nulos/None)
         col_comp1, col_comp2 = st.columns(2)
         
+        link_br = camisa.get("link_br")
+        link_int = camisa.get("link_int")
+        
         with col_comp1:
-            if camisa.get("link_br"):
-                st.link_button("💲 COMPARE 🇧🇷", camisa["link_br"], use_container_width=True)
+            if link_br and pd.notna(link_br):
+                st.link_button("💲 COMPARE 🇧🇷", link_br, use_container_width=True)
             else:
                 st.button("💲 COMPARE 🇧🇷", disabled=True, use_container_width=True, key=f"dis_br_{camisa['id']}")
                 
         with col_comp2:
-            if camisa.get("link_int"):
-                st.link_button("💲 COMPARE 🌐", camisa["link_int"], use_container_width=True)
+            if link_int and pd.notna(link_int):
+                st.link_button("💲 COMPARE 🌐", link_int, use_container_width=True)
             else:
                 st.button("💲 COMPARE 🌐", disabled=True, use_container_width=True, key=f"dis_int_{camisa['id']}")
 
