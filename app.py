@@ -93,19 +93,19 @@ def carregar_dados():
                 f"{RAW_BASE}/liverpool-detalhes21.jpeg"
             ]
         },
-        # 3. BLUSA JUVENTUS
+        # 3. JAQUETA JUVENTUS 2009/2010 TREINO
         {
             "id": 3,
-            "titulo": "blusa agasalho juventus adidas",
+            "titulo": "jaqueta juventus 2009 / 2010 treino nike",
             "pais": "Itália",
             "time_regiao": "Turim - Juventus",
-            "marca": "adidas",
+            "marca": "nike",
             "tamanho": "G",
             "preco_original": 0.0,
-            "preco_atual": 280.0,
+            "preco_atual": 299.0,
             "tag": "raridade",
             "link_br": None,
-            "link_int": None,
+            "link_int": "https://www.ebay.com/itm/168192283231",
             "fotos": [
                 f"{RAW_BASE}/blusajuve-frente.jpeg",
                 f"{RAW_BASE}/blusajuve-verso.jpeg",
@@ -149,18 +149,18 @@ def carregar_dados():
                 f"{RAW_BASE}/galo-detalhes.jpeg"
             ]
         },
-        # 6. IBIZA
+        # 6. IBIZA EIVISSA 2009
         {
             "id": 6,
-            "titulo": "camisa ibiza espanha vermelha",
+            "titulo": "camisa ibiza eivissa 2009 camisa 1 champs vermelha",
             "pais": "Espanha",
             "time_regiao": "Ibiza",
-            "marca": "outra",
+            "marca": "champs",
             "tamanho": "M",
-            "preco_original": 0.0,
-            "preco_atual": 180.0,
+            "preco_original": 180.0,
+            "preco_atual": 150.0,
             "tag": "importada",
-            "link_br": None,
+            "link_br": "https://brechodofutebol.com/products/ibiza-eivissa-2009-segunda-camisa-tam-p?srsltid=AfmBOooaZ5LOym7C_3sq2WOdXIBHKsP21kuJ4_aKrlHqjoTehlDttDkw",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/ibiza-frente.jpeg",
@@ -169,109 +169,109 @@ def carregar_dados():
                 f"{RAW_BASE}/ibiza-detalhes21.jpeg"
             ]
         },
-        # 7. INGLATERRA
+        # 7. INGLATERRA 2007 HOME
         {
             "id": 7,
-            "titulo": "camisa selecao inglaterra umbro",
+            "titulo": "camisa selecao inglaterra 2007 home umbro",
             "pais": "Inglaterra",
             "time_regiao": "Seleção Inglesa",
             "marca": "umbro",
             "tamanho": "M",
             "preco_original": 0.0,
-            "preco_atual": 200.0,
+            "preco_atual": 280.0,
             "tag": "barateou",
-            "link_br": None,
+            "link_br": "https://www.futclassics.com.br/product-page/inglaterra-2007-home-11",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/inglaterra-frente.jpeg",
                 f"{RAW_BASE}/inglaterra-detalhes.jpeg"
             ]
         },
-        # 8. ITÁLIA CAMPIONE
+        # 8. ITÁLIA CAMPIONE DEL MONDO
         {
             "id": 8,
-            "titulo": "camisa italia campione comemorativa",
+            "titulo": "camisa italia campione del mondo comemorativa puma",
             "pais": "Itália",
             "time_regiao": "Seleção Italiana",
             "marca": "puma",
             "tamanho": "G",
             "preco_original": 0.0,
-            "preco_atual": 190.0,
+            "preco_atual": 240.0,
             "tag": "especial",
             "link_br": None,
-            "link_int": None,
+            "link_int": "https://www.ebay.com/itm/226370114363",
             "fotos": [
                 f"{RAW_BASE}/italiacampione-frente.jpeg",
                 f"{RAW_BASE}/italiacampione-verso.jpeg",
                 f"{RAW_BASE}/italiacampione-detalhes.jpeg"
             ]
         },
-        # 9. ITÁLIA PIRLO #21
+        # 9. ITÁLIA COPA 2014 - PIRLO #21
         {
             "id": 9,
-            "titulo": "camisa italia pirlo #21 puma azul",
+            "titulo": "camisa italia copa do mundo fifa 2014 home #21 pirlo puma",
             "pais": "Itália",
             "time_regiao": "Seleção Italiana",
             "marca": "puma",
             "tamanho": "M",
             "preco_original": 0.0,
-            "preco_atual": 240.0,
+            "preco_atual": 300.0,
             "tag": "barateou",
-            "link_br": None,
+            "link_br": "https://www.futclassics.com.br/product-page/italia-2014-home-m-5-6",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/italia-frente.jpeg",
                 f"{RAW_BASE}/italia-verso.jpeg"
             ]
         },
-        # 10. JUVENTUS AZUL SUPERGA #9
+        # 10. JUVENTUS DA MOOCA - ANIVERSÁRIO 459 ANOS
         {
             "id": 10,
-            "titulo": "camisa juventus azul superga #9 retro",
-            "pais": "Itália",
-            "time_regiao": "Turim - Juventus",
-            "marca": "kappa",
+            "titulo": "camisa juventus da mooca azul aniversario 459 anos #9 superbolla",
+            "pais": "Brasil",
+            "time_regiao": "São Paulo - Mooca",
+            "marca": "superbolla",
             "tamanho": "G",
-            "preco_original": 0.0,
-            "preco_atual": 270.0,
-            "tag": "raridade",
-            "link_br": None,
+            "preco_original": 270.0,
+            "preco_atual": 120.0,
+            "tag": "barateou",
+            "link_br": "https://www.mercadolivre.com.br/camisa-juventus-da-mooca-especial-2015-azul/up/MLBU1726959953?pdp_filters=item_id%3AMLB3312171725#origin=share&sid=share&wid=MLB3312171725&action=copy",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/juve-azul-frente.jpeg",
                 f"{RAW_BASE}/juve-azul-verso.jpeg"
             ]
         },
-        # 11. JUVENTUS TRADICIONAL JEEP
+        # 11. JUVENTUS 2007/2008 - NEW HOLLAND FIAT GROUP
         {
             "id": 11,
-            "titulo": "camisa juventus listrada jeep adidas",
+            "titulo": "camisa juventus 2007 / 2008 nike new holland fiat group scudetto",
             "pais": "Itália",
             "time_regiao": "Turim - Juventus",
-            "marca": "adidas",
+            "marca": "nike",
             "tamanho": "M",
-            "preco_original": 0.0,
-            "preco_atual": 220.0,
+            "preco_original": 220.0,
+            "preco_atual": 150.0,
             "tag": "barateou",
-            "link_br": None,
+            "link_br": "https://www.mercadolivre.com.br/camisa-juventus-201516/up/MLBU3253537035#polycard_client=search-web-mobile&be_origin=backend&overlay_label=not_apply&search_layout=stack&position=2&type=product&tracking_id=7b617228-c264-44e0-8502-4d3938d259a5&wid=MLB4104645169&sid=search",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/juve-frente.jpeg",
                 f"{RAW_BASE}/juve-verso.jpeg"
             ]
         },
-        # 12. JUVENTUS ROSA JEEP
+        # 12. JUVENTUS ROSA JEEP 2015/2016
         {
             "id": 12,
-            "titulo": "camisa juventus rosa jeep adidas",
+            "titulo": "camisa juventus 2015 / 2016 rosa jeep adidas climacool",
             "pais": "Itália",
             "time_regiao": "Turim - Juventus",
             "marca": "adidas",
             "tamanho": "M",
             "preco_original": 0.0,
-            "preco_atual": 250.0,
+            "preco_atual": 350.0,
             "tag": "barateou",
-            "link_br": None,
+            "link_br": "https://www.mercadolivre.com.br/camisa-juventus-201516/up/MLBU3253537035#polycard_client=search-web-mobile&be_origin=backend&overlay_label=not_apply&search_layout=stack&position=2&type=product&tracking_id=7b617228-c264-44e0-8502-4d3938d259a5&wid=MLB4104645169&sid=search",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/juve-rosa-frente.jpeg",
@@ -298,36 +298,36 @@ def carregar_dados():
                 f"{RAW_BASE}/kaiser-detalhes.jpeg"
             ]
         },
-        # 14. OPERÁRIO #9
+        # 14. OPERÁRIO MATO GROSSO DO SUL / MS #9
         {
             "id": 14,
-            "titulo": "camisa operario #9 listrada preto e branco",
+            "titulo": "camisa operario mato grosso do sul / ms home #9 champs",
             "pais": "Brasil",
-            "time_regiao": "Paraná",
-            "marca": "outra",
+            "time_regiao": "Mato Grosso do Sul - Operário MS",
+            "marca": "champs",
             "tamanho": "G",
-            "preco_original": 0.0,
-            "preco_atual": 160.0,
+            "preco_original": 160.0,
+            "preco_atual": 60.0,
             "tag": "barateou",
-            "link_br": None,
+            "link_br": "https://www.sofutebolbrasil.com/produto/569/camisa-oficial-operario-ms",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/operario-frente.jpeg",
                 f"{RAW_BASE}/operario-verso.jpeg"
             ]
         },
-        # 15. PANATHINAIKOS COSMOTE
+        # 15. PANATHINAIKOS COSMOTE 2010/2011
         {
             "id": 15,
-            "titulo": "camisa panathinaikos cosmote grecia verde",
+            "titulo": "camisa panathinaikos 2010 / 2011 home cosmote adidas",
             "pais": "Grécia",
             "time_regiao": "Atenas",
             "marca": "adidas",
             "tamanho": "M",
-            "preco_original": 0.0,
-            "preco_atual": 280.0,
+            "preco_original": 280.0,
+            "preco_atual": 260.0,
             "tag": "importada",
-            "link_br": None,
+            "link_br": "https://www.enjoei.com.br/p/camisa-panathinaikos-2010-11-home-original-143625516",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/panathinaikos-frente.jpeg",
@@ -355,18 +355,18 @@ def carregar_dados():
                 f"{RAW_BASE}/samp-detalhes.jpeg"
             ]
         },
-        # 17. SÃO PAULO LG #10 TRICOLOR
+        # 17. SÃO PAULO REEBOK 2007 - ADRIANO IMPERADOR #10
         {
             "id": 17,
-            "titulo": "camisa sao paulo lg #10 tricolor reebok",
+            "titulo": "camisa sao paulo reebok 2007 adriano imperador #10 lg fast patch campeao 2007",
             "pais": "Brasil",
             "time_regiao": "São Paulo",
             "marca": "reebok",
             "tamanho": "G",
-            "preco_original": 0.0,
-            "preco_atual": 290.0,
+            "preco_original": 250.0,
+            "preco_atual": 199.0,
             "tag": "barateou",
-            "link_br": None,
+            "link_br": "https://memoriasdoesporteoficial.com.br/produto/camisa-sao-paulo-reebok-2007-tricolor/",
             "link_int": None,
             "fotos": [
                 f"{RAW_BASE}/spfc2-frente.jpeg",
@@ -449,7 +449,7 @@ for _, camisa in df_filtrado.iterrows():
         link_whatsapp = f"https://wa.me/{WHATSAPP_NUMERO}?text={msg_whatsapp}"
         st.link_button("quero essa", link_whatsapp, use_container_width=True, type="primary")
         
-        # 2. Botões Lado a Lado de Comparação de Preço (com checagem segura de valores nulos/None)
+        # 2. Botões Lado a Lado de Comparação de Preço
         col_comp1, col_comp2 = st.columns(2)
         
         link_br = camisa.get("link_br")
