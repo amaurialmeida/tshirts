@@ -391,8 +391,8 @@ for _, camisa in df_filtrado.iterrows():
             
         foto_atual_idx = st.session_state[key_foto]
         
-        # Exibe imagem ativa
-        st.image(fotos[foto_atual_idx], use_column_width=True)
+        # Exibe imagem ativa com o novo parametro use_container_width
+        st.image(fotos[foto_atual_idx], use_container_width=True)
         
         # Carrossel de Fotos
         if len(fotos) > 1:
