@@ -120,7 +120,7 @@ def carregar_dados():
             "preco_atual": 350.0,
             "tag": "barateou",
             "link_br": "https://www.mercadolivre.com.br/camisa-juventus-201516/up/MLBU3253537035#polycard_client=search-web-mobile&be_origin=backend&overlay_label=not_apply&search_layout=stack&position=2&type=product&tracking_id=7b617228-c264-44e0-8502-4d3938d259a5&wid=MLB4104645169&sid=search",
-            "link_int": None,
+            "link_int": "https://www.ebay.com/itm/389084099014",
             "fotos": [
                 f"{RAW_BASE}/juve-rosa-frente.jpeg",
                 f"{RAW_BASE}/juve-rosa-verso.jpeg",
@@ -202,19 +202,19 @@ def carregar_dados():
                 f"{RAW_BASE}/blusasp-verso.jpeg"
             ]
         },
-        # 9. LIVERPOOL 2006/2007 - TEAMGEIST
+        # 9. LIVERPOOL 2006/2007 - CARLSBERG
         {
             "id": 9,
-            "titulo": "Camisa Liverpool 2006/2007, Adidas Teamgeist Original de Época",
+            "titulo": "Camisa Liverpool 2006/2007 Home, Adidas, Carlsberg, Item de Colecionador",
             "pais": "Inglaterra",
             "time_regiao": "Liverpool",
             "marca": "Adidas",
-            "tamanho": "M",
+            "tamanho": "G",
             "preco_original": 0.0,
             "preco_atual": 350.0,
             "tag": "raridade",
             "link_br": "https://www.mercadolivre.com.br/camisa-liverpool-2005-2006-adidas-teamgeist-original-epoca/up/MLBU3358810718",
-            "link_int": None,
+            "link_int": "https://www.ebay.com/itm/197498583510?_skw=tshirt+liverpool+2006&itmmeta=01KYD269TBZ5DFCPTHCMH7NG2C&hash=item2dfbd539d6%3Ag%3AjCoAAeSwAM5oZ9ke&itmprp=enc%3AAQALAAAA0GfYFPkwiKCW4ZNSs2u11xBTlNznrKBr4%2Fe4QTnG2Ah3t4ODtfk4hyhbQ%2BaHHb6RFOr2H1PRv3I7o1NohP4iZCrNdEG6F4O4iv6L%2FK8%2FZ2U2maD7--rm3tydgIWRMYS1g7MxSzJts%2BQI484kQaBQClGAfW6MHjFP2vPPL2gwSwakHydOffl5xhFZH4UZl3vYWvbDehTUXt9rVtQBQ7lsMqls7ImEKCh9gnj%2F2QMKryuIQqcUE%2FfkPEANwAG9KG%2FNVpYwQMEz%2BEfWO03TzWQcqNI%3D%7Ctkp%3ABk9SR6qdmaLzZw&keyword=tshirt+liverpool+2006&sacat=0&relatedSearch=true",
             "fotos": [
                 f"{RAW_BASE}/liverpool-frente.jpeg",
                 f"{RAW_BASE}/liverpool-verso.jpeg",
@@ -272,7 +272,7 @@ def carregar_dados():
             "preco_atual": 260.0,
             "tag": "raridade",
             "link_br": None,
-            "link_int": None,
+            "link_int": "https://www.ebay.it/itm/286873950722?_skw=13+xl&itmmeta=01KYDSW28WDRMYNA7NNG1889DT&hash=item42cb051a02:g:-AUAAOSw66Zl2fh8&itmprp=enc%3AAQALAAAAwDKQclQvzFwZQpmMrsO4LuqS2UlywQRW0M2E4RyaQLHFGGGEv2IOpf6UqgJkzaRDCt0l4pRDWnzaK6jH1klUnsaeRd2%2BVGGamjR5cKWLB530wo0oRDqFZlcFkSffqkkYi4LrawERvYsZyyrm2P%2FoMwo%2F2ou8IRNIENeZ6oUO2Z0CqzXercaQSaZMS4wBM8ZvXdpYr4oNpWZeJMWPAgZYZZJbJlgM5x%2FEVmptuuRAAAVY%2FxF4lh84rLD%2FBGFFHbGqyw%3D%3D%7Ctkp%3ABk9SR96k8LnzZw",
             "fotos": [
                 f"{RAW_BASE}/kaiser-frente.jpeg",
                 f"{RAW_BASE}/kaiser-verso.jpeg",
