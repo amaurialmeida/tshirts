@@ -1,35 +1,14 @@
 import streamlit as st
 import urllib.parse
+import io
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib import colors
 
 st.set_page_config(page_title="Gerador de Etiquetas", page_icon="🏷️", layout="wide")
 
-# CSS especial para impressão e geração de PDF perfeitos
-st.markdown("""
-<style>
-@media print {
-    /* Esconde elementos nativos do Streamlit e o botão no PDF */
-    header, footer, [data-testid="stSidebar"], .stButton, iframe, button {
-        display: none !important;
-    }
-    body {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-    }
-    .main .block-container {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    /* Garante que o layout não quebre na hora de imprimir */
-    [data-testid="column"] {
-        width: 50% !important;
-        float: left !important;
-        box-sizing: border-box !important;
-    }
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Lista do catálogo de camisas atualizada (com o novo item #17)
+# Lista do catálogo de camisas (17 itens)
 catalog = [
     {
         "id": 1,
@@ -153,39 +132,95 @@ catalog = [
 ]
 
 def get_qr_url(link):
-    """Gera a imagem do QR Code via API QuickChart"""
     if not link:
         return None
     encoded = urllib.parse.quote(link)
     return f"https://quickchart.io/qr?text={encoded}&size=150"
 
-st.title("🏷️ Gerador de Etiquetas para Embalagens")
-st.write("Clique no botão abaixo para gerar o arquivo PDF com todas as etiquetas montadas.")
+def generate_pdf():
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4, rightMargin=20, leftMargin=20, topMargin=20, bottomMargin=20)
+    styles = getSampleStyleSheet()
+    
+    title_style = ParagraphStyle('TitleStyle', parent=styles['Heading1'], fontSize=12, leading=14, fontName="Helvetica-Bold")
+    text_style = ParagraphStyle('TextStyle', parent=styles['Normal'], fontSize=9, leading=11)
+    price_style = ParagraphStyle('PriceStyle', parent=styles['Normal'], fontSize=11, leading=13, textColor=colors.HexColor('#2e7d32'), fontName="Helvetica-Bold")
+    
+    table_data = []
+    row = []
+    
+    for item in catalog:
+        qr_br_url = get_qr_url(item['link_br'])
+        qr_int_url = get_qr_url(item['link_int'])
+        
+        qr_br_img = Image(qr_br_url, width=60, height=60) if qr_br_url else Paragraph("<i>Sem Link BR</i>", text_style)
+        qr_int_img = Image(qr_int_url, width=60, height=60) if qr_int_url else Paragraph("<i>Sem Link INT</i>", text_style)
+        
+        qr_table = Table([[Paragraph("<b>BR</b>", text_style), Paragraph("<b>INT</b>", text_style)],
+                          [qr_br_img, qr_int_img]], colWidths=[100, 100])
+        qr_table.setStyle(TableStyle([
+            ('ALIGN', (0,0), (-1,-1), 'CENTER'),
+            ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+        ]))
+        
+        card_content = [
+            Paragraph(f"#{item['id']} {item['titulo']}", title_style),
+            Spacer(1, 4),
+            Paragraph(f"Marca: {item['marca']} | Tam: {item['tamanho']}", text_style),
+            Spacer(1, 2),
+            Paragraph(f"Preço: {item['preco']}", price_style),
+            Spacer(1, 4),
+            qr_table
+        ]
+        
+        card_table = Table([[card_content]], colWidths=[260])
+        card_table.setStyle(TableStyle([
+            ('BOX', (0,0), (-1,-1), 1, colors.HexColor('#333333')),
+            ('PADDING', (0,0), (-1,-1), 8),
+            ('VALIGN', (0,0), (-1,-1), 'TOP'),
+            ('BACKGROUND', (0,0), (-1,-1), colors.white)
+        ]))
+        
+        row.append(card_table)
+        if len(row) == 2:
+            table_data.append(row)
+            row = []
+            
+    if row:
+        row.append("")
+        table_data.append(row)
+        
+    main_table = Table(table_data, colWidths=[270, 270])
+    main_table.setStyle(TableStyle([
+        ('VALIGN', (0,0), (-1,-1), 'TOP'),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 10),
+    ]))
+    
+    doc.build([main_table])
+    buffer.seek(0)
+    return buffer.getvalue()
 
-# Botão de Impressão direcionado para o documento principal
-st.components.v1.html("""
-    <button onclick="window.parent.print()" style="
-        background-color: #2e7d32;
-        color: white;
-        padding: 14px 20px;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        width: 100%;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    ">📄 Imprimir / Salvar site em PDF</button>
-""", height=70)
+# Interface do Streamlit
+st.title("🏷️ Gerador de Etiquetas para Embalagens")
+st.write("Clique no botão abaixo para baixar o arquivo PDF completo direto para o seu dispositivo.")
+
+# Botão de Download PDF Direto (Nativo do Python, sem crashar o celular)
+pdf_bytes = generate_pdf()
+st.download_button(
+    label="📥 Baixar Etiquetas em PDF",
+    data=pdf_bytes,
+    file_name="etiquetas_camisas.pdf",
+    mime="application/pdf",
+    type="primary",
+    use_container_width=True
+)
 
 st.divider()
 
-# Grade de 2 colunas
+# Exibição na tela (Web)
 cols = st.columns(2)
-
 for idx, item in enumerate(catalog):
     col = cols[idx % 2]
-    
     with col:
         with st.container(border=True):
             st.subheader(f"#{item['id']} {item['titulo']}")
@@ -193,7 +228,6 @@ for idx, item in enumerate(catalog):
             st.markdown(f"### **Preço:** :green[{item['preco']}]")
             
             c_br, c_int = st.columns(2)
-            
             qr_br = get_qr_url(item['link_br'])
             qr_int = get_qr_url(item['link_int'])
             
