@@ -3,6 +3,27 @@ import urllib.parse
 
 st.set_page_config(page_title="Gerador de Etiquetas", page_icon="🏷️", layout="wide")
 
+# Estilo para formatar o botão e garantir que a página fique bonita ao salvar em PDF
+st.markdown("""
+<style>
+/* Estilização para quando for gerar o PDF/Imprimir */
+@media print {
+    /* Esconde elementos do Streamlit que não precisam sair no PDF */
+    header, footer, [data-testid="stSidebar"], .stButton, iframe {
+        display: none !important;
+    }
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+    .main .block-container {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Lista completa e atualizada do catálogo de camisas
 catalog = [
     {
@@ -127,11 +148,27 @@ def get_qr_url(link):
     return f"https://quickchart.io/qr?text={encoded}&size=150"
 
 st.title("🏷️ Gerador de Etiquetas para Embalagens")
-st.write("Abaixo estão todas as etiquetas com dados atualizados e QR Codes para comparativo de mercado. Para imprimir ou salvar em PDF, use a função do seu navegador (Menu > Imprimir).")
+st.write("Clique no botão abaixo para salvar o catálogo completo em arquivo PDF ou imprimir diretamente.")
+
+# Botão de Imprimir / Gerar PDF
+st.components.v1.html("""
+    <button onclick="window.print()" style="
+        background-color: #2e7d32;
+        color: white;
+        padding: 14px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    ">📄 Imprimir / Salvar site em PDF</button>
+""", height=70)
 
 st.divider()
 
-# Exibe em grade de 2 colunas para caber na tela
+# Exibe em grade de 2 colunas para caber perfeitamente na tela e no papel
 cols = st.columns(2)
 
 for idx, item in enumerate(catalog):
