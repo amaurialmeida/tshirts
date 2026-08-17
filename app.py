@@ -1,6 +1,9 @@
 import streamlit as st
 import urllib.parse
 import io
+import requests
+from PIL import Image as PILImage
+
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -137,35 +140,64 @@ def get_qr_url(link):
     encoded = urllib.parse.quote(link)
     return f"https://quickchart.io/qr?text={encoded}&size=150"
 
+def fetch_qr_image(url):
+    """Baixa a imagem via HTTP de forma segura e converte para fluxo de memória"""
+    if not url:
+        return None
+    try:
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            img_data = io.BytesIO(response.content)
+            return Image(img_data, width=55, height=55)
+    except Exception:
+        pass
+    return None
+
 def generate_pdf():
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=A4, rightMargin=20, leftMargin=20, topMargin=20, bottomMargin=20)
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        rightMargin=15,
+        leftMargin=15,
+        topMargin=15,
+        bottomMargin=15
+    )
+    
     styles = getSampleStyleSheet()
     
-    title_style = ParagraphStyle('TitleStyle', parent=styles['Heading1'], fontSize=12, leading=14, fontName="Helvetica-Bold")
-    text_style = ParagraphStyle('TextStyle', parent=styles['Normal'], fontSize=9, leading=11)
-    price_style = ParagraphStyle('PriceStyle', parent=styles['Normal'], fontSize=11, leading=13, textColor=colors.HexColor('#2e7d32'), fontName="Helvetica-Bold")
+    # Remove emojis dos títulos no PDF para evitar conflito de fontes
+    title_style = ParagraphStyle('TitleStyle', parent=styles['Heading2'], fontSize=10, leading=12, fontName="Helvetica-Bold")
+    text_style = ParagraphStyle('TextStyle', parent=styles['Normal'], fontSize=8, leading=10)
+    price_style = ParagraphStyle('PriceStyle', parent=styles['Normal'], fontSize=10, leading=12, textColor=colors.HexColor('#2e7d32'), fontName="Helvetica-Bold")
     
-    table_data = []
-    row = []
+    story = []
+    card_data_list = []
     
     for item in catalog:
-        qr_br_url = get_qr_url(item['link_br'])
-        qr_int_url = get_qr_url(item['link_int'])
+        clean_title = item['titulo'].encode('ascii', 'ignore').decode('ascii').strip()
+        if not clean_title:
+            clean_title = f"Item #{item['id']}"
+            
+        qr_br_img = fetch_qr_image(get_qr_url(item['link_br']))
+        qr_int_img = fetch_qr_image(get_qr_url(item['link_int']))
         
-        qr_br_img = Image(qr_br_url, width=60, height=60) if qr_br_url else Paragraph("<i>Sem Link BR</i>", text_style)
-        qr_int_img = Image(qr_int_url, width=60, height=60) if qr_int_url else Paragraph("<i>Sem Link INT</i>", text_style)
+        br_cell = qr_br_img if qr_br_img else Paragraph("<i>Sem Link BR</i>", text_style)
+        int_cell = qr_int_img if qr_int_img else Paragraph("<i>Sem Link INT</i>", text_style)
         
-        qr_table = Table([[Paragraph("<b>BR</b>", text_style), Paragraph("<b>INT</b>", text_style)],
-                          [qr_br_img, qr_int_img]], colWidths=[100, 100])
+        qr_table = Table(
+            [[Paragraph("<b>BR</b>", text_style), Paragraph("<b>INT</b>", text_style)],
+             [br_cell, int_cell]],
+            colWidths=[110, 110]
+        )
         qr_table.setStyle(TableStyle([
             ('ALIGN', (0,0), (-1,-1), 'CENTER'),
             ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
         ]))
         
         card_content = [
-            Paragraph(f"#{item['id']} {item['titulo']}", title_style),
-            Spacer(1, 4),
+            Paragraph(f"#{item['id']} {clean_title}", title_style),
+            Spacer(1, 3),
             Paragraph(f"Marca: {item['marca']} | Tam: {item['tamanho']}", text_style),
             Spacer(1, 2),
             Paragraph(f"Preço: {item['preco']}", price_style),
@@ -173,47 +205,60 @@ def generate_pdf():
             qr_table
         ]
         
-        card_table = Table([[card_content]], colWidths=[260])
-        card_table.setStyle(TableStyle([
-            ('BOX', (0,0), (-1,-1), 1, colors.HexColor('#333333')),
-            ('PADDING', (0,0), (-1,-1), 8),
+        card_box = Table([[card_content]], colWidths=[250])
+        card_box.setStyle(TableStyle([
+            ('BOX', (0,0), (-1,-1), 1, colors.HexColor('#666666')),
+            ('PADDING', (0,0), (-1,-1), 6),
             ('VALIGN', (0,0), (-1,-1), 'TOP'),
             ('BACKGROUND', (0,0), (-1,-1), colors.white)
         ]))
         
-        row.append(card_table)
+        card_data_list.append(card_box)
+
+    # Organiza os cartões em 2 colunas por linha
+    grid_data = []
+    row = []
+    for card in card_data_list:
+        row.append(card)
         if len(row) == 2:
-            table_data.append(row)
+            grid_data.append(row)
             row = []
-            
     if row:
         row.append("")
-        table_data.append(row)
-        
-    main_table = Table(table_data, colWidths=[270, 270])
-    main_table.setStyle(TableStyle([
+        grid_data.append(row)
+
+    main_grid = Table(grid_data, colWidths=[260, 260])
+    main_grid.setStyle(TableStyle([
         ('VALIGN', (0,0), (-1,-1), 'TOP'),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 10),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
+        ('LEFTPADDING', (0,0), (-1,-1), 0),
+        ('RIGHTPADDING', (0,0), (-1,-1), 0),
     ]))
     
-    doc.build([main_table])
+    story.append(main_grid)
+    doc.build(story)
+    
     buffer.seek(0)
     return buffer.getvalue()
 
 # Interface do Streamlit
 st.title("🏷️ Gerador de Etiquetas para Embalagens")
-st.write("Clique no botão abaixo para baixar o arquivo PDF completo direto para o seu dispositivo.")
+st.write("Gere o arquivo PDF pronto para impressão de forma segura.")
 
-# Botão de Download PDF Direto (Nativo do Python, sem crashar o celular)
-pdf_bytes = generate_pdf()
-st.download_button(
-    label="📥 Baixar Etiquetas em PDF",
-    data=pdf_bytes,
-    file_name="etiquetas_camisas.pdf",
-    mime="application/pdf",
-    type="primary",
-    use_container_width=True
-)
+if st.button("📄 Gerar e Baixar PDF com Etiquetas", type="primary", use_container_width=True):
+    with st.spinner("Baixando QR codes e montando o PDF..."):
+        try:
+            pdf_data = generate_pdf()
+            st.download_button(
+                label="📥 Clique aqui para salvar o PDF",
+                data=pdf_data,
+                file_name="etiquetas_camisas.pdf",
+                mime="application/pdf",
+                use_container_width=True
+            )
+            st.success("PDF gerado com sucesso!")
+        except Exception as e:
+            st.error(f"Erro ao gerar PDF: {e}")
 
 st.divider()
 
