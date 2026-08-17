@@ -3,28 +3,33 @@ import urllib.parse
 
 st.set_page_config(page_title="Gerador de Etiquetas", page_icon="🏷️", layout="wide")
 
-# Estilo para formatar o botão e garantir que a página fique bonita ao salvar em PDF
+# CSS especial para impressão e geração de PDF perfeitos
 st.markdown("""
 <style>
-/* Estilização para quando for gerar o PDF/Imprimir */
 @media print {
-    /* Esconde elementos do Streamlit que não precisam sair no PDF */
-    header, footer, [data-testid="stSidebar"], .stButton, iframe {
+    /* Esconde elementos nativos do Streamlit e o botão no PDF */
+    header, footer, [data-testid="stSidebar"], .stButton, iframe, button {
         display: none !important;
     }
     body {
-        background-color: white !important;
-        color: black !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
     }
     .main .block-container {
         padding: 0 !important;
         margin: 0 !important;
     }
+    /* Garante que o layout não quebre na hora de imprimir */
+    [data-testid="column"] {
+        width: 50% !important;
+        float: left !important;
+        box-sizing: border-box !important;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
 
-# Lista completa e atualizada do catálogo de camisas
+# Lista do catálogo de camisas atualizada (com o novo item #17)
 catalog = [
     {
         "id": 1,
@@ -137,6 +142,13 @@ catalog = [
         "marca": "Champs", "tamanho": "M", "preco": "R$ 150,00",
         "link_br": "https://brechodofutebol.com/products/ibiza-eivissa-2009-segunda-camisa-tam-p",
         "link_int": None
+    },
+    {
+        "id": 17,
+        "titulo": "Itália Rugby 2007 - 2009 🇮🇹",
+        "marca": "Kappa", "tamanho": "G", "preco": "R$ 150,00",
+        "link_br": "https://www.enjoei.com.br/p/camisa-selecao-italia-rugby-111153794",
+        "link_int": "https://www.ebay.co.uk/itm/282395881167"
     }
 ]
 
@@ -148,11 +160,11 @@ def get_qr_url(link):
     return f"https://quickchart.io/qr?text={encoded}&size=150"
 
 st.title("🏷️ Gerador de Etiquetas para Embalagens")
-st.write("Clique no botão abaixo para salvar o catálogo completo em arquivo PDF ou imprimir diretamente.")
+st.write("Clique no botão abaixo para gerar o arquivo PDF com todas as etiquetas montadas.")
 
-# Botão de Imprimir / Gerar PDF
+# Botão de Impressão direcionado para o documento principal
 st.components.v1.html("""
-    <button onclick="window.print()" style="
+    <button onclick="window.parent.print()" style="
         background-color: #2e7d32;
         color: white;
         padding: 14px 20px;
@@ -168,7 +180,7 @@ st.components.v1.html("""
 
 st.divider()
 
-# Exibe em grade de 2 colunas para caber perfeitamente na tela e no papel
+# Grade de 2 colunas
 cols = st.columns(2)
 
 for idx, item in enumerate(catalog):
