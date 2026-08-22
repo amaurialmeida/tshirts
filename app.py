@@ -40,6 +40,17 @@ st.markdown("""
         border-radius: 4px;
         font-size: 0.8rem;
         font-weight: bold;
+        margin-right: 5px;
+    }
+    .badge-vendido {
+        background-color: #d32f2f;
+        color: #ffffff;
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 8px;
     }
     .shirt-title {
         font-weight: 600;
@@ -72,6 +83,7 @@ def carregar_dados():
             "preco_original": 160.0,
             "preco_atual": 60.0,
             "tag": "barateou",
+            "vendido": False,
             "link_br": "https://www.sofutebolbrasil.com/produto/569/camisa-oficial-operario-ms",
             "link_int": None,
             "fotos": [
@@ -90,6 +102,7 @@ def carregar_dados():
             "preco_original": 270.0,
             "preco_atual": 120.0,
             "tag": "barateou",
+            "vendido": False,
             "link_br": "https://www.mercadolivre.com.br/camisa-juventus-da-mooca-especial-2015-azul/up/MLBU1726959953?pdp_filters=item_id%3AMLB3312171725#origin=share&sid=share&wid=MLB3312171725&action=copy",
             "link_int": None,
             "fotos": [
@@ -108,6 +121,7 @@ def carregar_dados():
             "preco_original": 220.0,
             "preco_atual": 150.0,
             "tag": "barateou",
+            "vendido": False,
             "link_br": "https://www.mercadolivre.com.br/camisa-juventus-201516/up/MLBU3253537035#polycard_client=search-web-mobile&be_origin=backend&overlay_label=not_apply&search_layout=stack&position=2&type=product&tracking_id=7b617228-c264-44e0-8502-4d3938d259a5&wid=MLB4104645169&sid=search",
             "link_int": None,
             "fotos": [
@@ -126,6 +140,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 350.0,
             "tag": "barateou",
+            "vendido": True,  # VENDIDO 🚫
             "link_br": "https://www.mercadolivre.com.br/camisa-juventus-201516/up/MLBU3253537035#polycard_client=search-web-mobile&be_origin=backend&overlay_label=not_apply&search_layout=stack&position=2&type=product&tracking_id=7b617228-c264-44e0-8502-4d3938d259a5&wid=MLB4104645169&sid=search",
             "link_int": "https://www.ebay.com/itm/389084099014",
             "fotos": [
@@ -145,6 +160,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 299.0,
             "tag": "raridade",
+            "vendido": True,  # VENDIDO 🚫
             "link_br": None,
             "link_int": "https://www.ebay.com/itm/168192283231",
             "fotos": [
@@ -164,6 +180,7 @@ def carregar_dados():
             "preco_original": 250.0,
             "preco_atual": 199.0,
             "tag": "barateou",
+            "vendido": False,
             "link_br": "https://memoriasdoesporteoficial.com.br/produto/camisa-sao-paulo-reebok-2007-tricolor/",
             "link_int": "https://www.ebay.com/itm/175121591014",
             "fotos": [
@@ -183,6 +200,7 @@ def carregar_dados():
             "preco_original": 500.0,
             "preco_atual": 450.0,
             "tag": "barateou",
+            "vendido": True,  # VENDIDO 🚫
             "link_br": "https://pe.olx.com.br/grande-recife/esportes-e-lazer/roupas-esportivas/camisa-sao-paulo-adidas-1997-datacontrol-1508643853?utm_medium=shared_link&utm_source=direct",
             "link_int": None,
             "fotos": [
@@ -202,6 +220,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 600.0,
             "tag": "relíquia",
+            "vendido": False,
             "link_br": None,
             "link_int": None,
             "fotos": [
@@ -220,6 +239,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 350.0,
             "tag": "raridade",
+            "vendido": True,  # VENDIDO 🚫
             "link_br": "https://www.mercadolivre.com.br/camisa-liverpool-2005-2006-adidas-teamgeist-original-epoca/up/MLBU3358810718",
             "link_int": "https://www.ebay.com/itm/197498583510",
             "fotos": [
@@ -239,6 +259,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 320.0,
             "tag": "raridade",
+            "vendido": True,  # VENDIDO 🚫
             "link_br": None,
             "link_int": "https://www.ebay.com/itm/267415041067",
             "fotos": [
@@ -258,6 +279,7 @@ def carregar_dados():
             "preco_original": 280.0,
             "preco_atual": 260.0,
             "tag": "importada",
+            "vendido": False,
             "link_br": "https://www.enjoei.com.br/p/camisa-panathinaikos-2010-11-home-original-143625516",
             "link_int": "https://www.ebay.com/itm/389490870451",
             "fotos": [
@@ -278,6 +300,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 260.0,
             "tag": "raridade",
+            "vendido": False,
             "link_br": None,
             "link_int": "https://www.ebay.it/itm/286873950722",
             "fotos": [
@@ -297,6 +320,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 300.0,
             "tag": "barateou",
+            "vendido": False,
             "link_br": "https://www.futclassics.com.br/product-page/italia-2014-home-m-5-6",
             "link_int": "https://www.ebay.com/itm/128011480704",
             "fotos": [
@@ -315,6 +339,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 240.0,
             "tag": "especial",
+            "vendido": False,
             "link_br": None,
             "link_int": "https://www.ebay.com/itm/226370114363",
             "fotos": [
@@ -334,6 +359,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 280.0,
             "tag": "barateou",
+            "vendido": False,
             "link_br": "https://www.futclassics.com.br/product-page/inglaterra-2007-home-11",
             "link_int": None,
             "fotos": [
@@ -352,6 +378,7 @@ def carregar_dados():
             "preco_original": 180.0,
             "preco_atual": 150.0,
             "tag": "importada",
+            "vendido": True,  # VENDIDO 🚫
             "link_br": "https://brechodofutebol.com/products/ibiza-eivissa-2009-segunda-camisa-tam-p?srsltid=AfmBOooaZ5LOym7C_3sq2WOdXIBHKsP21kuJ4_aKrlHqjoTehlDttDkw",
             "link_int": None,
             "fotos": [
@@ -372,6 +399,7 @@ def carregar_dados():
             "preco_original": 0.0,
             "preco_atual": 150.0,
             "tag": "especial",
+            "vendido": False,
             "link_br": "https://www.enjoei.com.br/p/camisa-selecao-italia-rugby-111153794",
             "link_int": "https://www.ebay.co.uk/itm/282395881167",
             "fotos": [
@@ -382,7 +410,7 @@ def carregar_dados():
     ]
     return pd.DataFrame(data)
 
-# --- FUNÇÕES PARA GERAÇÃO DO PDF ---
+# --- FUNÇÕES PARA GERAÇÃO DO PDF (Gera apenas para disponíveis) ---
 def get_qr_url(link):
     if link and isinstance(link, str) and link.strip():
         encoded = urllib.parse.quote(link)
@@ -402,6 +430,9 @@ def fetch_qr_image(url):
     return None
 
 def generate_pdf(df_items):
+    # Filtra apenas as camisas NÃO vendidas para o PDF de etiquetas
+    df_disponiveis = df_items[df_items['vendido'] == False]
+    
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(
         buffer, pagesize=A4, rightMargin=15, leftMargin=15, topMargin=15, bottomMargin=15
@@ -414,7 +445,7 @@ def generate_pdf(df_items):
     
     card_data_list = []
     
-    for _, item in df_items.iterrows():
+    for _, item in df_disponiveis.iterrows():
         clean_title = item['titulo'].encode('ascii', 'ignore').decode('ascii').strip()
         if not clean_title:
             clean_title = f"Item #{item['id']}"
@@ -483,7 +514,7 @@ df = carregar_dados()
 st.title("⚽ Camisas de Futebol Amauri")
 
 # Botão para geração do PDF de etiquetas
-if st.button("📄 Gerar e Baixar PDF de Etiquetas", type="primary", use_container_width=True):
+if st.button("📄 Gerar e Baixar PDF de Etiquetas (Apenas Disponíveis)", type="primary", use_container_width=True):
     with st.spinner("Preparando o arquivo PDF com as etiquetas..."):
         try:
             pdf_data = generate_pdf(df)
@@ -520,6 +551,8 @@ st.divider()
 for _, camisa in df_filtrado.iterrows():
     col1, col2 = st.columns([1, 2])
     
+    is_vendido = camisa.get("vendido", False)
+    
     with col1:
         fotos = camisa["fotos"]
         key_foto = f"foto_idx_{camisa['id']}"
@@ -529,6 +562,10 @@ for _, camisa in df_filtrado.iterrows():
             
         foto_atual_idx = st.session_state[key_foto]
         
+        # Banner superior de Vendido sobre a foto
+        if is_vendido:
+            st.error("🚫 VENDIDO - ITEM INDISPONÍVEL")
+
         # Exibe imagem ativa
         st.image(fotos[foto_atual_idx], use_container_width=True)
         
@@ -546,13 +583,17 @@ for _, camisa in df_filtrado.iterrows():
                     st.rerun()
 
     with col2:
-        # Tag de Destaque
-        if camisa["tag"]:
+        # Faixas/Badges de Status
+        if is_vendido:
+            st.markdown('<div class="badge-vendido">🚫 VENDIDO</div>', unsafe_allow_html=True)
+        elif camisa["tag"]:
             st.markdown(f'<span class="badge-barateou">⚡ {camisa["tag"].upper()}</span>', unsafe_allow_html=True)
             
-        # Preços
+        # Preços (Se vendido, mostra riscado)
         preco_fmt = f"R$ {camisa['preco_atual']:.2f}".replace('.', ',')
-        if camisa['preco_original'] > camisa['preco_atual']:
+        if is_vendido:
+            st.markdown(f'<div style="margin-top: 10px;"><span class="old-price" style="font-size:1.3rem;">{preco_fmt}</span></div>', unsafe_allow_html=True)
+        elif camisa['preco_original'] > camisa['preco_atual']:
             preco_orig_fmt = f"R$ {camisa['preco_original']:.2f}".replace('.', ',')
             st.markdown(f'<div style="margin-top: 10px;"><span class="price-tag">{preco_fmt}</span><span class="old-price">{preco_orig_fmt}</span></div>', unsafe_allow_html=True)
         else:
@@ -562,31 +603,34 @@ for _, camisa in df_filtrado.iterrows():
         st.markdown(f'<div class="shirt-title">#{camisa["id"]} {camisa["titulo"]}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="shirt-sub">{camisa["time_regiao"]} ({camisa["pais"]}) • Tam {camisa["tamanho"]}</div>', unsafe_allow_html=True)
         
-        # 1. Botão Laranja "Me Interessei Por Essa"
-        msg_whatsapp = urllib.parse.quote(f"Olá Amauri! Tenho interesse na camisa: #{camisa['id']} {camisa['titulo']} ({preco_fmt})")
-        link_whatsapp = f"https://wa.me/{WHATSAPP_NUMERO}?text={msg_whatsapp}"
-        
-        st.markdown(
-            f"""
-            <a href="{link_whatsapp}" target="_blank" style="text-decoration: none;">
-                <button style="
-                    background-color: #FF6600;
-                    color: white;
-                    border: none;
-                    padding: 12px;
-                    border-radius: 6px;
-                    font-weight: bold;
-                    width: 100%;
-                    cursor: pointer;
-                    font-size: 15px;
-                    margin-bottom: 10px;
-                ">
-                    💬 Me Interessei Por Essa
-                </button>
-            </a>
-            """,
-            unsafe_allow_html=True
-        )
+        # 1. Botão "Me Interessei Por Essa" / "Item Vendido"
+        if is_vendido:
+            st.button("🚫 Item Indisponível / Vendido", disabled=True, use_container_width=True, key=f"btn_vendido_{camisa['id']}")
+        else:
+            msg_whatsapp = urllib.parse.quote(f"Olá Amauri! Tenho interesse na camisa: #{camisa['id']} {camisa['titulo']} ({preco_fmt})")
+            link_whatsapp = f"https://wa.me/{WHATSAPP_NUMERO}?text={msg_whatsapp}"
+            
+            st.markdown(
+                f"""
+                <a href="{link_whatsapp}" target="_blank" style="text-decoration: none;">
+                    <button style="
+                        background-color: #FF6600;
+                        color: white;
+                        border: none;
+                        padding: 12px;
+                        border-radius: 6px;
+                        font-weight: bold;
+                        width: 100%;
+                        cursor: pointer;
+                        font-size: 15px;
+                        margin-bottom: 10px;
+                    ">
+                        💬 Me Interessei Por Essa
+                    </button>
+                </a>
+                """,
+                unsafe_allow_html=True
+            )
         
         # 2. Botões Lado a Lado de Comparação de Preço (Link 🇧🇷 e Link 🌎)
         col_comp1, col_comp2 = st.columns(2)
@@ -595,13 +639,13 @@ for _, camisa in df_filtrado.iterrows():
         link_int = camisa.get("link_int")
         
         with col_comp1:
-            if link_br and pd.notna(link_br) and str(link_br).strip():
+            if not is_vendido and link_br and pd.notna(link_br) and str(link_br).strip():
                 st.link_button("Link 🇧🇷", link_br, use_container_width=True)
             else:
                 st.button("Link 🇧🇷", disabled=True, use_container_width=True, key=f"dis_br_{camisa['id']}")
                 
         with col_comp2:
-            if link_int and pd.notna(link_int) and str(link_int).strip():
+            if not is_vendido and link_int and pd.notna(link_int) and str(link_int).strip():
                 st.link_button("Link 🌎", link_int, use_container_width=True)
             else:
                 st.button("Link 🌎", disabled=True, use_container_width=True, key=f"dis_int_{camisa['id']}")
